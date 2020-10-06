@@ -40,6 +40,15 @@ def ej1():
     # Colocar la leyenda y el label con el nombre de la función
     # Darle color a la línea a su elección
 
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    ax.plot(x, y, color = 'g', marker = '.')
+    ax.set_title('y = x**2')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.legend()
+    plt.show()
+
 
 def ej2():
     # Line Plot
@@ -65,6 +74,17 @@ def ej2():
     # Cada función dibujarla con un color distinto
     # a su elección
 
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    ax.plot(x, y1, color = 'r', marker = '+', label = 'x**2')
+    ax.plot(x, y2, color = 'b', marker = '.', label = 'x**3')
+    ax.set_facecolor('whitesmoke')
+    ax.set_title('y1 = x**2\ny2 = x**3')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.legend()
+    plt.show()
+
 
 def ej3():
     # Scatter Plot
@@ -84,6 +104,16 @@ def ej3():
     # cada gráfico
 
     # Elegir un marker a elección
+
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    ax.scatter(x, y, color = 'y')
+    ax.set_facecolor('whitesmoke')
+    ax.set_title('tangente hiperbolica de y sobre x')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.legend()
+    plt.show()
 
 
 def ej4():
@@ -123,11 +153,42 @@ def ej4():
 
     # Colocar una grilla a elección
 
+    gs = gridspec.GridSpec(2, 2)
+    fig = plt.figure()
+    ax1 = fig.add_subplot(gs[0,0])
+    ax2 = fig.add_subplot(gs[0,1])
+    ax3 = fig.add_subplot(gs[1,0])
+    ax4 = fig.add_subplot(gs[1,1])
+    ax1.plot(x, y1, color = 'r', marker = '<', ls = '--', label = 'y1 = x**2')
+    ax2.plot(x, y2, color = 'b', marker = '>', ls = ':',  label = 'y2 = x**3')
+    ax3.plot(x, y3, color = 'y', marker = '+', ls = '-.',  label = 'y3 = x**4')
+    ax4.plot(x, y4, color = 'g', marker = '.', ls = '-',  label = 'y4 = np.sqrt(x)')
+    ax1.set_title('x**2')
+    ax1.set_xlabel('x')
+    ax1.set_ylabel('y')
+    ax2.set_title('x**3')
+    ax2.set_xlabel('x')
+    ax2.set_ylabel('y')
+    ax3.set_title('x**4')
+    ax3.set_xlabel('x')
+    ax3.set_ylabel('y')
+    ax4.set_title('raiz cuadrada')
+    ax4.set_xlabel('x')
+    ax4.set_ylabel('y')
+    ax1.grid()
+    ax2.grid()
+    ax3.grid()
+    ax4.grid()
+    ax1.legend()
+    ax2.legend()
+    ax3.legend()
+    ax4.legend()
+    plt.show()
+
 
 if __name__ == '__main__':
     print("Bienvenidos a otra clase de Inove con Python")
     ej1()
-    # ej2()
-    # ej2()
-    # ej3()
-    # ej4()
+    ej2()
+    ej3()
+    ej4()

@@ -44,7 +44,11 @@ Descripción del dataset "ventas.csv"
 - El dataset contiene 3 meses (genéricos) de 30 días c/u
 
 '''
-
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.axes
+import matplotlib.gridspec as gridspec
+import mplcursors
 
 def ej1():
     print('Comenzamos a divertirnos!')
@@ -91,8 +95,20 @@ def ej1():
     y = dataset[filas_mes_1, 2]
     o tambien puede usar
     y = mes_1[:, 2]
-
     '''
+
+    x = np.where(data[:,0] == 1, data[:,1], None)
+    y = np.where(data[:,0] == 1, data[:,2], None)
+
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    ax.plot(x, y, color = 'r', marker = '+', label = '')
+    ax.set_facecolor('whitesmoke')
+    ax.set_title('Evolución de la facturación de la categoría alimentos\npara el primer mes')
+    ax.set_xlabel('dias')
+    ax.set_ylabel('Ventas Alimentos')
+    ax.legend()
+    plt.show()
 
 
 def ej2():
@@ -119,8 +135,26 @@ def ej2():
     NOTA: Importante!, en este caso no disponen facilmente del eje "X" de diff,
     para simplificar el caso solamente graficar la variable "tendencia"
     plot(tendencia)
-
     '''
+
+    x1 = np.where(data[1:,0] == 1, data[1:,1], None)
+    x2 = np.where(data[1:,0] == 2, data[1:,1]+30, None)
+    x3 = np.where(data[1:,0] == 3, data[1:,1]+60, None)
+    y = np.diff(data[:,2])
+
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    
+    ax.plot(x1, y, color = 'g', marker = '.', ls = '-', label = 'Mes 1')
+    ax.plot(x2, y, color = 'r', marker = '.', ls = '-.', label = 'Mes 2')
+    ax.plot(x3, y, color = 'k', marker = '.', ls = '--', label = 'Mes 3')
+    
+    ax.set_facecolor('whitesmoke')
+    ax.set_title('')
+    ax.set_xlabel('')
+    ax.set_ylabel('')
+    ax.legend()
+    plt.show()
 
 
 def ej3():
@@ -135,8 +169,24 @@ def ej3():
     Luego graficar utilizando Line Plot esta nueva lista/array/columna
     para visualizar la tendencia de cuantos días consecutivos hay
     ventas de electrodomésticos.
-
     '''
+
+    x1 = np.where(data[:,0] == 1, data[:,1], None)
+    x2 = np.where(data[:,0] == 2, data[:,1]+30, None)
+    x3 = np.where(data[:,0] == 3, data[:,1]+60, None)
+    y = np.where(data[:,5] == 0, 0, 1)
+
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    ax.plot(x1, y, color = 'r', marker = '', label = 'Mes 1')
+    ax.plot(x2, y, color = 'g', marker = '', label = 'Mes 2')
+    ax.plot(x3, y, color = 'k', marker = '', label = 'Mes 3')
+    ax.set_facecolor('whitesmoke')
+    ax.set_title('Ventas de electrodomesticos\nCero: No venta\nUno: Venta')
+    ax.set_xlabel('Dias')
+    ax.set_ylabel('')
+    ax.legend()
+    plt.show()
 
 
 def ej4():
@@ -159,6 +209,18 @@ def ej4():
     para visualizar que categoría facturó más en lo que va
     del año
     '''
+
+    suma = [np.sum(data[:,2]), np.sum(data[:,3]), np.sum(data[:,4]), np.sum(data[:,5])]
+   
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    
+    ax.pie(suma, labels = header[2:], autopct = '%1.1f%%', shadow = True, startangle = 90)
+    
+    ax.set_title('Gastos totales por categoria')
+    ax.set_facecolor('whitesmoke')
+    
+    plt.show()
 
 
 def ej5():
@@ -183,12 +245,44 @@ def ej5():
     realicen uno solo y agrupen la información utilizando gráfico de barras
     apilados o agrupados (a su elección)
     '''
+    
+    y1 = [np.where(data[:,0] == 1 ,np.sum(data[:,2], None), np.where(data[:,0] == 2 ,
+    np.sum(data[:,2], None), np.where(data[:,0] == 3 ,np.sum(data[:,2], None)]
+    y2 = [np.where(data[:,0] == 1 ,np.sum(data[:,3], None), np.where(data[:,0] == 2 ,
+    np.sum(data[:,3], None), np.where(data[:,0] == 3 ,np.sum(data[:,3], None)]
+    y3 = [np.where(data[:,0] == 1 ,np.sum(data[:,4], None), np.where(data[:,0] == 2 ,
+    np.sum(data[:,4], None), np.where(data[:,0] == 3 ,np.sum(data[:,4], None)]
+    y4 = [np.where(data[:,0] == 1 ,np.sum(data[:,5], None), np.where(data[:,0] == 2 ,
+    np.sum(data[:,5], None), np.where(data[:,0] == 3 ,np.sum(data[:,5], None)]
 
+    # y1 = [[np.sum(data[:,2]) if data[:,0]==1], [np.sum(data[:,2]) if data[:,0]==2], [np.sum(data[:,2]) if data[:,0]==3]]
+    # y2 = [[np.sum(data[:,3]) if data[:,0]==1], [np.sum(data[:,3]) if data[:,0]==2], [np.sum(data[:,3]) if data[:,0]==3]]
+    # y3 = [[np.sum(data[:,4]) if data[:,0]==1], [np.sum(data[:,4]) if data[:,0]==2], [np.sum(data[:,4]) if data[:,0]==3]]
+    # y4 = [[np.sum(data[:,5]) if data[:,0]==1], [np.sum(data[:,5]) if data[:,0]==2], [np.sum(data[:,5]) if data[:,0]==3]]
+
+    mensual = np.array([1, 2, 3])
+    width = 0.2
+    fig = plt.figure()
+    ax = fig.add_subplot()
+
+    ax.bar(mensual, y1, width=width, label=header[2])
+    ax.bar(mensual + width, y2, width=width, label=header[3])
+    ax.bar(mensual + 2*width, y3, width=width, label=header[4])
+    ax.bar(mensual + 3*width, y4, width=width, label=header[5])
+    ax.set_facecolor('whitesmoke')
+    ax.legend()
+    ax.set_xticks(mensual + 0.3)
+    ax.set_xticklabels(['Enero', 'Febrero', 'Marzo'])
+    plt.show()
 
 if __name__ == '__main__':
     print("Ejercicios de práctica")
-    ej1()
+    
+    data = np.genfromtxt('ventas.csv', delimiter = ',', skip_header = 1)
+    header = np.genfromtxt('ventas.csv', delimiter = ',', dtype = str, skip_footer = 90)
+    
+    # ej1()
     # ej2()
     # ej3()
     # ej4()
-    # ej5()
+    ej5()

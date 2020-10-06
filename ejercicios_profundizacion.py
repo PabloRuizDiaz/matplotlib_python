@@ -31,9 +31,9 @@ def ej1():
     x = list(range(-10, 11, 1))
 
     # Realizar tres gráficos que representen
-    # y1 = x^2 (X al cuadrado)
-    # y2 = x^3 (X al cubo)
-    # y3 = x^4 (X a la cuarta)
+    y1 = [i**2 for i in x] # (X al cuadrado)
+    y2 = [i**3 for i in x] # (X al cubo)
+    y3 = [i**4 for i in x] # (X a la cuarta)
     # Utilizar comprension de listas para generar
     # y1, y2 e y3 basado en los valores de x
 
@@ -55,6 +55,36 @@ def ej1():
     # Cada gráfico realizarlo con un color distinto
     # a su elección
 
+    gs = gridspec.GridSpec(3, 1)
+    fig = plt.figure()
+    ax1 = fig.add_subplot(gs[0,0])
+    ax2 = fig.add_subplot(gs[1,0])
+    ax3 = fig.add_subplot(gs[2,0])
+    
+    ax1.plot(x, y1, color = 'r', marker = '<', ls = '--', label = 'y1 = x**2')
+    ax2.plot(x, y2, color = 'b', marker = '>', ls = ':',  label = 'y2 = x**3')
+    ax3.plot(x, y3, color = 'y', marker = '+', ls = '-.',  label = 'y3 = x**4')
+    
+    ax1.set_title('x**2')
+    ax1.set_xlabel('x')
+    ax1.set_ylabel('y')
+    ax2.set_title('x**3')
+    ax2.set_xlabel('x')
+    ax2.set_ylabel('y')
+    ax3.set_title('x**4')
+    ax3.set_xlabel('x')
+    ax3.set_ylabel('y')
+    
+    ax1.grid()
+    ax2.grid()
+    ax3.grid()
+    
+    ax1.legend()
+    ax2.legend()
+    ax3.legend()
+   
+    plt.show()
+
 
 def ej2():
     # Scatter Plot
@@ -64,8 +94,8 @@ def ej2():
     x = np.arange(0, 4*np.pi, 0.1)
 
     # Realizar dos gráficos que representen
-    # y1 = sin(x)
-    # y2 = cos(x)
+    y1 = [np.sin(i) for i in x]
+    y2 = [np.cos(i) for i in x]
     # Utilizar los métodos de Numpy para calcular
     # "y1" y "y2" basado en los valores de x
 
@@ -83,6 +113,27 @@ def ej2():
     # Cada gráfico realizarlo con un mark distinto
     # a su elección.
 
+    sg = gridspec.GridSpec(1, 2)
+    fig = plt.figure()
+    ax1 = fig.add_subplot(sg[0, 0])
+    ax2 = fig.add_subplot(sg[0, 1])
+    
+    ax1.scatter(x, y1, color = 'r', label = 'y1 = sin(x)')
+    ax2.scatter(x, y2, color = 'b', label = 'y2 = cos(x)')
+    
+    ax1.set_title('seno de x')
+    ax1.set_xlabel('x')
+    ax1.set_ylabel('y')
+    ax1.grid()
+    ax1.legend()
+    ax2.set_title('coseno de x')
+    ax2.set_xlabel('x')
+    ax2.set_ylabel('y')
+    ax2.grid()
+    ax2.legend()
+    
+    plt.show()
+
 
 def ej3():
     # Bar Plot
@@ -98,6 +149,20 @@ def ej3():
 
     # Se debe colocar título al gráfico.
     # Se debe cambiar la grilla y el fondo a su elección.
+
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    
+    ax.bar(lenguajes, performance, color = 'r')
+    
+    ax.set_title('Performance de diversos lenguajes')
+    ax.set_xlabel('Lenguajes')
+    ax.set_ylabel('Performance')
+    ax.grid()
+    ax.legend()
+    ax.set_facecolor('whitesmoke')
+    
+    plt.show()
 
 
 def ej4():
@@ -116,6 +181,18 @@ def ej4():
     # Se desea mostrar en el gráfico los porcentajes de c/u
     # Se debe colocar un título al gráfico
 
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    explode = (0.1, 0, 0, 0, 0, 0, 0)
+    
+    ax.pie(uso_lenguajes.values(), labels = uso_lenguajes.keys(), 
+    autopct = '%1.1f%%', shadow = True, startangle = 90, explode = explode)
+    
+    ax.set_title('Uso de lenguajes')
+    ax.set_facecolor('whitesmoke')
+    
+    plt.show()
+
 
 def ej5():
     # Uso de múltiples líneas en un mismo gráfico (axes)
@@ -130,11 +207,20 @@ def ej5():
     # Se pide usar comprensión de listas para generar las dos listas
     # por separado de los valoresde "X" e "Y" para poder utilizar
     # el line plot y observar la señal
-
-    # signal_x = [....]
-    # signal_y = [....]
+    
+    signal_x = [i['X'] for i in signal]
+    signal_y = [i['Y'] for i in signal]
 
     # plot(signal_x, signal_y)
+
+    fig = plt.figure()
+    ax = fig.add_subplot()
+
+    ax.plot(signal_x, signal_y, color='g')
+
+    ax.grid()
+    ax.set_facecolor('whitesmoke')
+    plt.show(block=False)
 
     # Ahora que han visto la señal senoidal en su gráfico, se desea
     # que generen otras dos listas de "X" e "Y" pero filtradas por
@@ -142,14 +228,25 @@ def ej5():
     # con aquellos valores de "Y" cuyo valor absoluto (abs)
     # supere 0.7
 
-    # filter_signal_x = [....]
-    # filter_signal_y = [....]
+    filter_signal_x = [i['X'] for i in signal if abs(i['Y']) > 0.7]
+    filter_signal_y = [i['Y'] for i in signal if abs(i['Y']) > 0.7]
 
     # Graficar juntas ambos conjuntos de listas y observar
     # el resultado. Graficar filter como scatter plot
+    
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    ax.plot(signal_x, signal_y, color = 'y')
+    ax.scatter(filter_signal_x, filter_signal_y, color = 'k')
 
-    # plot(signal_x, signal_y)
-    # scatter(filter_signal_x, filter_signal_y)
+    ax.set_title('Ejercico 5')
+    ax.set_xlabel('x - x_filter')
+    ax.set_ylabel('y - y_filter')
+    ax.grid()
+    ax.legend()
+    ax.set_facecolor('whitesmoke')
+
+    plt.show()
 
     # Pueden ver el concepto y la utilidad de
     # realizar un gráfico encima de otro para filtrar datos?
@@ -158,7 +255,7 @@ def ej5():
 if __name__ == '__main__':
     print("Bienvenidos a otra clase de Inove con Python")
     ej1()
-    # ej2()
-    # ej3()
-    # ej4()
-    # ej5()
+    ej2()
+    ej3()
+    ej4()
+    ej5()
