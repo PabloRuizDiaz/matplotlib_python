@@ -275,6 +275,55 @@ def ej5():
     ax.set_xticklabels(['Enero', 'Febrero', 'Marzo'])
     plt.show()
 
+                                      
+def ej5_inove():
+    print("Ahora sí! buena suerte :)")
+
+    '''
+    Ahora que ya hemos jugado un poco con nuestro dataset,
+    queremos realizar 3 gráficos de columnas en una misma figura
+    Cada gráfico de columnas deben tener 4 columnas que representan
+    el total vendido de cada categoría al final del mes.
+    Para poder hacer este ejercicio deben obtener primero
+    total facturado por categoria por mes (deben filtrar por mes)
+    Es parecido a lo realizado en el ejercicio anterior pero en vez
+    de todo el año es la suma total por mes por categoría.
+
+    Siendo que son 4 categorías y 3 meses, deben obtener al final
+    12 valores, con esos 12 valores construir 3 listas/arrays
+    para poder mostrar los 3 gráficos de columnas
+
+    BONUS Track: Si están cancheros y aún quedan energías para practicar,
+    les proponemos que en vez de realizar 3 gráficos de columnas separados
+    realicen uno solo y agrupen la información utilizando gráfico de barras
+    apilados o agrupados (a su elección)
+    '''
+    
+    mes_1 = data[data[:, 0] == 1, :]
+    mes_2 = data[data[:, 0] == 2, :]
+    mes_3 = data[data[:, 0] == 3, :]
+
+    y1 = [np.sum(mes_1[:,2]), np.sum(mes_2[:,2]), np.sum(mes_3[:,2])]
+    y2 = [np.sum(mes_1[:,3]), np.sum(mes_2[:,3]), np.sum(mes_3[:,3])]
+    y3 = [np.sum(mes_1[:,4]), np.sum(mes_2[:,4]), np.sum(mes_3[:,4])]
+    y4 = [np.sum(mes_1[:,5]), np.sum(mes_2[:,5]), np.sum(mes_3[:,5])]
+
+    mensual = np.array([1, 2, 3])
+    width = 1 / 6
+    fig = plt.figure()
+    ax = fig.add_subplot()
+
+    ax.bar(mensual, y1, width=width, label=header[2])
+    ax.bar(mensual + width, y2, width=width, label=header[3])
+    ax.bar(mensual + 2*width, y3, width=width, label=header[4])
+    ax.bar(mensual + 3*width, y4, width=width, label=header[5])
+    ax.set_facecolor('whitesmoke')
+    ax.legend()
+    ax.set_xticks(mensual + 0.3)
+    ax.set_xticklabels(['Enero', 'Febrero', 'Marzo'])
+    plt.show()
+                                      
+
 if __name__ == '__main__':
     print("Ejercicios de práctica")
     
